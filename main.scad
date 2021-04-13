@@ -4,6 +4,9 @@ module island(model_name) {
 
 module puzzle() {
 	// final module, assembles the puzzle
+    
+    // causes CGAL cache insert failed difference()
+    // errors but produces a stl file
     difference() {
         island("STL/v4.stl");
         color("blue")
