@@ -18,11 +18,11 @@ In addition Autodesk Netfabb was used to repair the file using the extended repa
 
 Todo:
 
-- Create the district\_data module which needs to correctly position district.svg spatially and linearly\_extrude the model such that it is able to be used in a difference operation to divide v4.stl into a number of pieces
+- ~~Create the district module which needs to correctly position district.svg spatially and linearly\_extrude the model such that it is able to be used in a difference operation to divide v4.stl into a number of pieces ~~
 
 Next steps:
 
-- Use the district\_data module in a difference operation with the final fully embellished v4.stl
+- ~~Use the district module in a difference operation with the final fully embellished v4.stl~~
 
 ## Volcano Land Data
 
@@ -30,7 +30,7 @@ Next steps:
 
 ![new](https://www.hawaii-guide.com/images/body_images/Hawaii_Big_Island_Volcanoes_by_Land_Area_Map.jpg)
 
-The original image data was attained  [here](https://www.lovebigisland.com/wp-content/uploads/200px-Location_Hawaii_Volcanoes.svg_.png) site, however it disagrees with v4.stl producing a slightly (Kilauea only contains half of it's caldera) incorrect result.
+The original image data was attained  [here](https://www.lovebigisland.com/wp-content/uploads/200px-Location_Hawaii_Volcanoes.svg_.png) site, however it disagrees with v4.stl producing a slightly incorrect result (Kilauea only contains half of it's caldera).
 Thus [this](https://www.hawaii-guide.com/images/body_images/Hawaii_Big_Island_Volcanoes_by_Land_Area_Map.jpg) will be used as an alternative image source.
 The image data is edited and converted to vector graphics using [this](https://picsvg.com) site.
 
