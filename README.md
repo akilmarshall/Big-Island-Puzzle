@@ -14,7 +14,7 @@ In addition Autodesk Netfabb was used to repair the file using the extended repa
 ## District Data
 
 ![district.png](img/district.png) was attained by editing [this](https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/HawaiiIslandDistricts-numbered.svg/1280px-HawaiiIslandDistricts-numbered.svg.png?1618303638911) image.
-[district.svg](SVG/district.svg) was created using district.png and [this](picsvg.com) site.
+[district.svg](SVG/district.svg) was created using district.png and [this](https://picsvg.com) site.
 
 Todo:
 
@@ -32,7 +32,7 @@ Next steps:
 
 The original image data was attained  [here](https://www.lovebigisland.com/wp-content/uploads/200px-Location_Hawaii_Volcanoes.svg_.png) site, however it disagrees with v4.stl producing a slightly (Kilauea only contains half of it's caldera) incorrect result.
 Thus [this](https://www.hawaii-guide.com/images/body_images/Hawaii_Big_Island_Volcanoes_by_Land_Area_Map.jpg) will be used as an alternative image source.
-The image data is edited and converted to vector graphics using [this](picsvg.com) site.
+The image data is edited and converted to vector graphics using [this](https://picsvg.com) site.
 
 Todo:
 
