@@ -1,3 +1,4 @@
 out/
 out.stl
-out.binstl
+*.binstl
+
