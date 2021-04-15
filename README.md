@@ -62,6 +62,6 @@ Next steps:
 
 - Create a module for each town's name rendering the text and linearly extruding it to be unioned into the final v4.stl
 - Create a module for each town's "dot" (to be differenced from the final v4.stl)
-- Create a module for each district's name rendering the text and linearly extruding it to be union into the final v4.stl
+- ~~Create a module for each district's name rendering the text and linearly extruding it to be union into the final v4.stl~~
 - ~~Create a module for each volcano's name rendering the text and linearly extruding it to be union into the final v4.stl~~
 - Create a module for the set of town names, district names, volcano names and dot modules respectively
