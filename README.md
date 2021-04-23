@@ -7,6 +7,8 @@ The architecture of the puzzle is simple and is defined as the union of its dist
 
 ![animated gif](img/animation.gif)
 
+(a better gif coming soon..)
+
 ## Terrain Data
 
 Terrain data for the Big Island was acquired from [this](https://jthatch.com/Terrain2STL/) site.
