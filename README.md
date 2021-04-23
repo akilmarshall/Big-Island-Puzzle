@@ -5,6 +5,8 @@ Heavy usage of union, intersection, and difference.
 
 The architecture of the puzzle is simple and is defined as the union of its distinct (often overlapping) components represented as 3D objects.
 
+![animated gif]{img/animation.gif =500x500}
+
 ## Terrain Data
 
 Terrain data for the Big Island was acquired from [this](https://jthatch.com/Terrain2STL/) site.

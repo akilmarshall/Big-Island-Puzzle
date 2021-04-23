@@ -211,6 +211,13 @@ module want() {
     import("SVG/shape.svg");
 }
 
+module base(h=50) {
+    x = 731;
+    y = 861;
+    translate([0, -y, -h])
+    cube([x, y, h]);
+}
+
 // compute all 3D objects in memory into the final puzzle
 module assemble_memory(island_model) {
     difference() {
@@ -227,12 +234,157 @@ module assemble_memory(island_model) {
     }
 }
 
-module base(h=50) {
-    x = 731;
-    y = 861;
-    translate([0, -y, -h])
-    cube([x, y, h]);
+i = "STL/v4.stl";
+
+// module with all features
+module puzzle_all() {
+    // string name: puzzle all
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano land.stl");
+            import("STL/volcano name.stl");
+            import("STL/district name.stl");
+            import("STL/town name.stl");
+            import("STL/town dot.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
 }
 
+// modules with 1 fewer feature
 
-i = "STL/v4.stl";
+module puzzle_no_vland() {
+    // string name: puzzle nvland
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano name.stl");
+            import("STL/district name.stl");
+            import("STL/town name.stl");
+            import("STL/town dot.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+module puzzle_no_vname() {
+    // string name: puzzle nvname
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano land.stl");
+            import("STL/district name.stl");
+            import("STL/town name.stl");
+            import("STL/town dot.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+module puzzle_no_dname() {
+    // string name: puzzle ndname
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano land.stl");
+            import("STL/volcano name.stl");
+            import("STL/town name.stl");
+            import("STL/town dot.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+module puzzle_no_tname() {
+    // string name: puzzle ntname
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano land.stl");
+            import("STL/volcano name.stl");
+            import("STL/district name.stl");
+            import("STL/town dot.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+module puzzle_no_tdot() {
+    // string name: puzzle ntdot
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano land.stl");
+            import("STL/volcano name.stl");
+            import("STL/district name.stl");
+            import("STL/town name.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+// modules with 2 fewer feature
+
+module puzzle_no_vland_vname() {
+    // either are acceptable
+    // string name: puzzle nvlandnvname
+    // string name: puzzle nvnamenvland
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/district name.stl");
+            import("STL/town name.stl");
+            import("STL/town dot.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+module puzzle_no_tname_tdot() {
+    // either are acceptable
+    // string name: puzzle ntnamentdot
+    // string name: puzzle ntdotntname 
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano land.stl");
+            import("STL/volcano name.stl");
+            import("STL/district name.stl");
+            base(3);
+        }
+        import("STL/district.stl");
+    }
+}
+
+// interface to this module
+// the string value of "part" determines the output when this file is run
+// default is the puzzle with all features
+// the selected module should be specified at the command line using -D part="{module name}"
+
+part = "puzzle all";
+if (part == "puzzle all") {
+    puzzle_all();
+}
+else if (part == "puzzle nvland") {
+    puzzle_no_vland();
+}
+else if (part == "puzzle nvname") {
+    puzzle_no_vname();
+}
+else if (part == "puzzle ndname") {
+    puzzle_no_dname();
+}
+else if (part == "puzzle ntname") {
+    puzzle_no_tname();
+}
+else if (part == "puzzle ntdot") {
+    puzzle_no_tdot();
+}
