@@ -10,6 +10,14 @@ module district() {
 	import("SVG/district.svg");
 }
 
+module outline() {
+	s = 7;
+	translate([3, -855, -50])
+	scale([s * 0.995, s * 1.005, 1])
+	linear_extrude(150)
+    import("SVG/outline.svg");
+}
+
 module district_topo(island_model, h=2) {
     intersection() {
         district(); 
@@ -178,15 +186,15 @@ module assemble() {
             island(i);
             // volcano land boundaries
             color("black")
-            import("STL/volcano land.stl");
+            import("STL/volcano_land.stl");
             // volcano names
             color("black")
-            import("STL/volcano names.stl");
+            import("STL/volcano_names.stl");
             // distric names
             color("black")
-            import("STL/district names.stl");
+            import("STL/district_names.stl");
             color("black")
-            import("STL/town dots.stl");
+            import("STL/town_dots.stl");
         }
         // district divisions
         import("STL/district.stl");
@@ -218,22 +226,6 @@ module base(h=50) {
     cube([x, y, h]);
 }
 
-// compute all 3D objects in memory into the final puzzle
-module assemble_memory(island_model) {
-    difference() {
-            union() {
-                island(i);
-                volcano_land(island_model);
-                volcano_names_topo(island_model);
-                town_names_topo(island_model);
-                town_dots_topo(island_model);
-                district_names_topo(island_model);
-                base(3);
-            }
-        district();
-    }
-}
-
 i = "STL/v4.stl";
 
 // module with all features
@@ -242,88 +234,105 @@ module puzzle_all() {
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano land.stl");
-            import("STL/volcano name.stl");
-            import("STL/district name.stl");
-            import("STL/town name.stl");
-            import("STL/town dot.stl");
-            base(3);
+            import("STL/volcano_land.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
+            base(10);
         }
         import("STL/district.stl");
+    }
+}
+
+// model with all features
+module model_all() {
+    // string name: model all
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano_land.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
+            base(3);
+        }
+        import("STL/outline.stl");
     }
 }
 
 // modules with 1 fewer feature
 
-module puzzle_no_vland() {
+module puzzle_no_volcano_land() {
     // string name: puzzle nvland
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano name.stl");
-            import("STL/district name.stl");
-            import("STL/town name.stl");
-            import("STL/town dot.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
             base(3);
         }
         import("STL/district.stl");
     }
 }
 
-module puzzle_no_vname() {
+module puzzle_no_volcano_name() {
     // string name: puzzle nvname
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano land.stl");
-            import("STL/district name.stl");
-            import("STL/town name.stl");
-            import("STL/town dot.stl");
+            import("STL/volcano_land.stl");
+            import("STL/district_name.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
             base(3);
         }
         import("STL/district.stl");
     }
 }
 
-module puzzle_no_dname() {
+module puzzle_no_district_name() {
     // string name: puzzle ndname
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano land.stl");
-            import("STL/volcano name.stl");
-            import("STL/town name.stl");
-            import("STL/town dot.stl");
+            import("STL/volcano_land.stl");
+            import("STL/volcano_name.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
             base(3);
         }
         import("STL/district.stl");
     }
 }
 
-module puzzle_no_tname() {
+module puzzle_no_town_name() {
     // string name: puzzle ntname
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano land.stl");
-            import("STL/volcano name.stl");
-            import("STL/district name.stl");
-            import("STL/town dot.stl");
+            import("STL/volcano_land.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
+            import("STL/town_dot.stl");
             base(3);
         }
         import("STL/district.stl");
     }
 }
 
-module puzzle_no_tdot() {
+module puzzle_no_town_dot() {
     // string name: puzzle ntdot
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano land.stl");
-            import("STL/volcano name.stl");
-            import("STL/district name.stl");
-            import("STL/town name.stl");
+            import("STL/volcano_land.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
+            import("STL/town_name.stl");
             base(3);
         }
         import("STL/district.stl");
@@ -332,32 +341,26 @@ module puzzle_no_tdot() {
 
 // modules with 2 fewer feature
 
-module puzzle_no_vland_vname() {
-    // either are acceptable
-    // string name: puzzle nvlandnvname
-    // string name: puzzle nvnamenvland
+module puzzle_no_volcano_land_volcano_name() {
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/district name.stl");
-            import("STL/town name.stl");
-            import("STL/town dot.stl");
+            import("STL/district_name.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
             base(3);
         }
         import("STL/district.stl");
     }
 }
 
-module puzzle_no_tname_tdot() {
-    // either are acceptable
-    // string name: puzzle ntnamentdot
-    // string name: puzzle ntdotntname 
+module puzzle_no_town_name_town_dot() {
     difference() {
         union() {
             import("STL/v4.stl");
-            import("STL/volcano land.stl");
-            import("STL/volcano name.stl");
-            import("STL/district name.stl");
+            import("STL/volcano_land.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
             base(3);
         }
         import("STL/district.stl");
@@ -366,25 +369,64 @@ module puzzle_no_tname_tdot() {
 
 // interface to this module
 // the string value of "part" determines the output when this file is run
-// default is the puzzle with all features
+// default is the model divided by district 
 // the selected module should be specified at the command line using -D part="{module name}"
 
-part = "puzzle all";
-if (part == "puzzle all") {
+part = "";
+if (part == "district") {
+    district();
+}
+else if (part == "district name") {
+    district_names_topo(i);
+}
+else if (part == "district topo") {
+    district_topo(i);
+}
+else if (part == "outline") {
+    outline();
+}
+else if (part == "town dot") {
+    town_dots_topo(i);
+}
+else if (part == "town name") {
+    town_names_topo(i);
+}
+else if (part == "volcano land") {
+    volcano_land(i); 
+}
+else if (part == "volcano name") {
+    volcano_names_topo(i);
+}
+else if (part == "model simple") {
+    difference() {
+        import("STL/v4.stl");
+        import("STL/outline.stl");
+    }
+}
+else if (part == "puzzle simple") {
+    difference() {
+        import("STL/v4.stl");
+        import("STL/district.stl");
+    }
+}
+else if (part == "puzzle all") {
     puzzle_all();
 }
-else if (part == "puzzle nvland") {
-    puzzle_no_vland();
+else if (part == "model all") {
+    model_all();
 }
-else if (part == "puzzle nvname") {
-    puzzle_no_vname();
+else if (part == "puzzle no volcano land") {
+    puzzle_no_volcano_land();
 }
-else if (part == "puzzle ndname") {
-    puzzle_no_dname();
+else if (part == "puzzle no volcano name") {
+    puzzle_no_volcano_name();
 }
-else if (part == "puzzle ntname") {
-    puzzle_no_tname();
+else if (part == "puzzle no district name") {
+    puzzle_no_district_name();
 }
-else if (part == "puzzle ntdot") {
-    puzzle_no_tdot();
+else if (part == "puzzle no town name") {
+    puzzle_no_town_name();
+}
+else if (part == "puzzle no town dot") {
+    puzzle_no_town_dot();
 }
