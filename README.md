@@ -1,90 +1,60 @@
 # Big Island Puzzle
 
 A topographic "puzzle" of the Big Island split by district and embellished with geographic information.
-Heavy usage of union, intersection, and difference.
-
-The architecture of the puzzle is simple and is defined as the union of its distinct (often overlapping) components represented as 3D objects.
+Designed with 3D printing in mind, if using a FDM printer a scale of 30% or larger is advised. 
 
 ![animated gif](img/animation.gif)
 
 (a better gif coming soon..)
 
-## Terrain Data
+## Theory
 
-Terrain data for the Big Island was acquired from [this](https://jthatch.com/Terrain2STL/) site.
-Verticality was exaggerated by a factor of 4 to produce [v4.stl](STL/v4.stl).
-In addition Autodesk Netfabb was used to repair the file using the extended repair setting.
+Since boolean operations are closed on 3D objects, the goal of this project is to describe the puzzle as the composition of boolean opeartions on component 3D objects.
 
-## District Data
+Since openscad provides functions to compute boolean opeartions the "hard" work is in writing modules for each component part of the puzzle.
 
-![district.png](img/district.png) was attained by editing [this](https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/HawaiiIslandDistricts-numbered.svg/1280px-HawaiiIslandDistricts-numbered.svg.png?1618303638911) image.
-[district.svg](SVG/district.svg) was created using district.png and [this](https://picsvg.com) site.
-
-Todo:
-
-- ~~Create the district module which needs to correctly position district.svg spatially and linearly\_extrude the model such that it is able to be used in a difference operation to divide v4.stl into a number of pieces ~~
-
-Next steps:
-
-- ~~Use the district module in a difference operation with the final fully embellished v4.stl~~
-
-## Volcano Land Data
-
-![old](https://www.lovebigisland.com/wp-content/uploads/200px-Location_Hawaii_Volcanoes.svg_.png)
-
-![new](https://www.hawaii-guide.com/images/body_images/Hawaii_Big_Island_Volcanoes_by_Land_Area_Map.jpg)
-
-The original image data was attained  [here](https://www.lovebigisland.com/wp-content/uploads/200px-Location_Hawaii_Volcanoes.svg_.png) site, however it disagrees with v4.stl producing a slightly incorrect result (Kilauea only contains half of it's caldera).
-
-edit: I was able to massage the scaling of the first image to more suitable divide the volcano's slopes. 
+This is quite handy as each feature set can be designed and used independently of the other features.
+Moreover as long as the module results in a 3D objects it's implementation details do not matter, i.e. the town names feature is extruded text using primitive openscad functions whereas the district feature is a linearly extruded vector image.
 
 
-Thus [this](https://www.hawaii-guide.com/images/body_images/Hawaii_Big_Island_Volcanoes_by_Land_Area_Map.jpg) will be used as an alternative image source.
-The image data is edited and converted to vector graphics using [this](https://picsvg.com) site.
 
-Todo:
+## Requirements
 
-- ~~edit the image source to create a suitable vector for use in a 3D environment~~
-- ~~Check and clean the vector in Inkscape~~
-- ~~Create the volcano\_land module that correctly positions and scales the vector to cover v4.stl and linearly\_extrude such that its use in an intersection operation with v4.stl will be maximally large 3D object~~
+- openscad 2020 version
+- [v4.stl](STL/v4.stl)
+- [district.svg](district.svg)
+- [outline.svg](outline.svg)
+- [shape.svg](shape.svg)
+- [volcano boundary.svg](volcano boundary.svg)
 
-Next steps:
 
-- ~~Create the volcano\_land\_topo\_data module which is the intersection of volcano\_land\_data and v4.stl, the idea being that this object and be scaled vertically and then unioned with v4.stl to create a topographic model with raised portions to distinguish the slopes of each volcano~~
+## How to Build
 
-## Geographical Data
+A Makefile is included with this project that functions as a build system.
+One must specify a top level object to assemble, i.e. "puzzle_all" and then one can simply 
 
-Town list:
+```
+$ make puzzle_all
+```
 
-- Hilo
-- Volcano
-- Na'alehu
-- Mioli'i
-- Captain Cook
-- Kailua Kona
-- Hawi
-- Waimea
-- Honoka'a
-- Laupahoehoe
 
-Todo:
+This will construct a puzzle object with all features, sub objects will be constructed as necessary and reused in the future.
+The following is a list of make targets:
 
-- ~~Come up with a list of towns to include~~
-- Add
-    - ~~Honomu~~
-    - ~~Papaikou~~
-    - ~~Kea'au~~
-    - ~~Pahoa~~
+- model_simple
+- model_all
+- puzzle_simple
+- puzzle_all: puzzle with all features
+- puzzle_nvland: puzzle with all features except the volcano land boundaries
+- puzzle_nvname: puzzle with all features except the volcano names
+- puzzle_ndname: puzzle with all features except the district names
+- puzzle_ntname: puzzle with all features except the town names
+- puzzle_ntdot: puzzle with all features except the town names 
 
-- ~~Decide on how to denote the location (dot? nothing?) of and text style (italic? different font?) of the towns~~
-- ~~Decide on how to textually stylize the district names~~
-- ~~Decide on how to textually stylize the volcano names~~
-- ~~Find and denote reference material to use for geographic positioning~~
+Note: A puzzle is a model that has been split by district.
 
-Next steps:
+## License
 
-- ~~Create a module for each town's name rendering the text and linearly extruding it to be unioned into the final v4.stl~~
-- ~~Create a module for each town's "dot" (to be differenced from the final v4.stl)~~
-- ~~Create a module for each district's name rendering the text and linearly extruding it to be union into the final v4.stl~~
-- ~~Create a module for each volcano's name rendering the text and linearly extruding it to be union into the final v4.stl~~
-- ~~Create a module for the set of town names, district names, volcano names and dot modules respectively~~
+Commercial use of this project is restricted.
+
+For non commercial use, attribution is required.
