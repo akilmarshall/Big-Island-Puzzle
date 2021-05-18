@@ -40,6 +40,10 @@ model_all: STL/v4.stl
 	openscad main.scad -m make -D 'part="model all"' -o out/model_all.binstl
 	@mv out/model_all.binstl out/model_all.stl
 
+model_nvland: STL/v4.stl
+	openscad main.scad -m make -D 'part="model no volcano land"' -o out/model_no_volcano_land.binstl
+	@mv out/model_no_volcano_land.binstl out/model_no_volcano_land.stl 
+
 puzzle_simple: STL/v4.stl
 	openscad main.scad -m make -D 'part="puzzle simple"' -o out/puzzle_simple.binstl
 	@mv out/puzzle_simple.binstl out/puzzle_simple.stl
