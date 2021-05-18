@@ -2,6 +2,7 @@ module island(model_name) {
 	import(model_name);
 }
 
+// primitive 3d object for Hawaii Counties districts
 module district() {
 	s = 7;
 	translate([3, -855, -50])
@@ -10,6 +11,7 @@ module district() {
 	import("SVG/district.svg");
 }
 
+// primitive 3d object for the Big Island's shape
 module outline() {
 	s = 7;
 	translate([3, -855, -50])
@@ -20,7 +22,12 @@ module outline() {
 
 module district_topo(island_model, h=2) {
     intersection() {
-        district(); 
+        //district(); 
+        s = 7;
+        translate([3, -855, -50])
+        scale([s * 0.995, s * 1.005, 1])
+        linear_extrude(150)
+        import("SVG/district_topo.svg");
         translate([0, 0, h])
         union() {
             island(island_model);
@@ -50,23 +57,45 @@ module mauna(name, x, y) {
     linear_extrude(100)
     translate([x, y, 0])
     rotate(a=0, v=[0,0,1])
-    text(name, 20, font=volcano_font);
+    text(name, 15, font=volcano_font);
 }
 
-module volcano_names(island_model, color="black") {
+module triangle(s) {
+    polygon(points=[[0, s/2],[s/2, -s/2],[-s/2, -s/2]]);
+}
+module mauna_indicator(x, y) {
+    translate([x, y, 0])
+    triangle(15);
+}
+
+module volcano_names(color="black") {
     color(color)
     union() {
-        mauna("Mauna Loa ▲", 200, -570);
-        mauna("Kīlauea ▲", 500, -560);
-        mauna("Mauna Kea ▲", 305, -250);
-        mauna("Kohala ▲", 150, -170);
-        mauna("Hualālai ▲", 30, -360);
+        mauna("Mauna Loa", 280, -550);
+        mauna("Kīlauea", 490, -542);
+        mauna("Mauna Kea", 275, -370);
+        mauna("Kohala", 150, -170);
+        mauna("Hualālai", 50, -330);
+    }
+}
+
+module volcano_indicators() {
+    linear_extrude(100)
+    union() {
+        mauna_indicator(283, -505); // mauna loa
+        mauna_indicator(462, -535); // kilauea
+        mauna_indicator(350, -295); // mauna kea
+        mauna_indicator(210, -135); // kohala
+        mauna_indicator(128, -372); // hualalai
     }
 }
 
 module volcano_names_topo(island_model, h=5) {
     intersection() {
-        volcano_names(island_model);
+        union() {
+            volcano_names();
+            //volcano_indicators();
+        }
         translate([0, 0, h])
         union() {
             island(island_model);
@@ -85,13 +114,15 @@ module district_names() {
     union() {
         district_name("North Hilo", 321, -447);
         district_name("South Hilo", 435, -420);
-        district_name("North Kona", 140, -450);
+        district_name("North Kona", 135, -450);
         district_name("South Kona", 116, -595);
-        district_name("N. Kohala", 108, -100);
-        district_name("South Kohala", 120, -240);
+        district_name("N. Kohala", 103, -100);
+        //district_name("South Kohala", 120, -240);
+        district_name("S. Kohala", 158, -290);
         district_name("Puna", 520, -475);
-        district_name("Hamakua", 225, -400);
-        district_name("Kau", 340, -500);
+        //district_name("Hamakua", 225, -400);
+        district_name("Hamakua", 300, -240);
+        district_name("Kau", 340, -510);
     }
 }
 
@@ -127,6 +158,8 @@ module town_dots() {
         town_dot(547, -270);  // honomu
         town_dot(594, -420);  // keaau
         town_dot(648, -490);  // pahoa
+        town_dot(169, -216); // waikaloa
+        town_dot(355, -662); // pahala
     }
 }
 
@@ -139,19 +172,22 @@ module town_name(name, x, y) {
 module town_names() {
     union() {
         town_name("Hawi", 130, -70);
-        town_name("Waimea", 200, -200);
+        town_name("Waimea", 205, -202);
         town_name("Honokaʻa", 300, -165);
-        town_name("Laupāhoehoe", 375, -220);
+        town_name("Laupāhoehoe", 370, -215);
         town_name("Hilo", 542, -393);
         town_name("Volcano", 455, -507);
         town_name("Nāʻālehu", 230, -732);
         town_name("Miloliʻi", 125, -680);
         town_name("Captain", 105, -496); town_name("Cook", 190, -496);
         town_name("Kailua Kona", 72, -415);
-        town_name("Keaʻau", 560, -440);
-        town_name("Pahoa", 620, -510);
+        town_name("Keaʻau", 565, -441);
+        town_name("Pahoa", 620, -512);
         town_name("Papaikou", 470, -332);
         town_name("Honomu", 472, -289);
+        town_name("Waikōloa ", 125, -240);
+        town_name("Village", 135, -260);
+        town_name("Pāhala", 320, -655);
     }
 }
 
@@ -174,30 +210,6 @@ module town_dots_topo(island_model, h=3) {
             island(island_model);
             base(h + 1);
         }
-    }
-}
-
-// import precomputed 3d models into the final puzzle
-// currently broken
-module assemble() {
-    difference() {
-        union() {
-            // base model
-            island(i);
-            // volcano land boundaries
-            color("black")
-            import("STL/volcano_land.stl");
-            // volcano names
-            color("black")
-            import("STL/volcano_names.stl");
-            // distric names
-            color("black")
-            import("STL/district_names.stl");
-            color("black")
-            import("STL/town_dots.stl");
-        }
-        // district divisions
-        import("STL/district.stl");
     }
 }
 
@@ -257,6 +269,22 @@ module model_all() {
             import("STL/town_name.stl");
             import("STL/town_dot.stl");
             base(3);
+        }
+        import("STL/outline.stl");
+    }
+}
+
+module model_no_volcano_land() {
+    // string name: model all
+    difference() {
+        union() {
+            import("STL/v4.stl");
+            import("STL/volcano_name.stl");
+            import("STL/district_name.stl");
+            import("STL/district_topo.stl");
+            import("STL/town_name.stl");
+            import("STL/town_dot.stl");
+            base(10);
         }
         import("STL/outline.stl");
     }
@@ -415,6 +443,9 @@ else if (part == "puzzle all") {
 else if (part == "model all") {
     model_all();
 }
+else if (part == "model no volcano land") {
+    model_no_volcano_land();
+}
 else if (part == "puzzle no volcano land") {
     puzzle_no_volcano_land();
 }
@@ -430,3 +461,17 @@ else if (part == "puzzle no town name") {
 else if (part == "puzzle no town dot") {
     puzzle_no_town_dot();
 }
+
+/*
+island(i);
+color("blue")
+town_names();
+color("black")
+district();
+color("black")
+volcano_names();
+color("black")
+town_dots();
+color("black")
+district_names();
+*/
